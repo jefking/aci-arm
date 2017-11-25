@@ -15,13 +15,20 @@
                 "description": "Container image to deploy. Should be of the form accountName/imagename:tag for images stored in Docker Hub or a fully qualified URI for a private registry like the Azure Container Registry."
             }
         },
-        "username": {
+        "imageLoginServer": {
+            "type": "String",
+            "defaultValue": ".azurecr.io",
+            "metadata": {
+                "description": "Container image to deploy. Should be of the form accountName/imagename:tag for images stored in Docker Hub or a fully qualified URI for a private registry like the Azure Container Registry."
+            }
+        },
+        "imageUsername": {
             "type": "string",
             "metadata": {
                 "description": "Container registry user name."
             }
         },
-        "password": {
+        "imagePassword": {
             "type": "string",
             "metadata": {
                 "description": "Container registry password."
@@ -50,13 +57,18 @@
             "apiVersion": "2017-08-01-preview",
             "location": "[resourceGroup().location]",
             "properties": {
+                "imageRegistryCredentials": [
+                    {
+                        "server": "[parameters('imageLoginServer')]",
+                        "username": "[parameters('imageUsername')]",
+                        "password": "[parameters('imagePassword')]"
+                    }
+                ],
                 "containers": [
                     {
                         "name": "[parameters('name')]",
                         "properties": {
                             "image": "[parameters('image')]",
-                            "registry-username": "[parameters('username')]",
-                            "registry-password": "[parameters('password')]",
                             "ports": [
                                 {
                                     "port": "2000"
