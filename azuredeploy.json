@@ -9,6 +9,18 @@
             },
             "defaultValue": "aci-from-acr"
         },
+        "environment": {
+            "type": "string",
+            "metadata": {
+                "description": "Environment container is running in"
+            },
+            "defaultValue": "staging",
+            "allowedValues": [
+                "dev",
+                "staging",
+                "production"
+            ]
+        },
         "image": {
             "type": "string",
             "metadata": {
@@ -68,6 +80,8 @@
             "apiVersion": "2017-08-01-preview",
             "location": "[resourceGroup().location]",
             "properties": {
+                "restartPolicy": "always",
+                "osType": "[parameters('osType')]",
                 "imageRegistryCredentials": [
                     {
                         "server": "[parameters('imageLoginServer')]",
@@ -97,6 +111,12 @@
                                     "port": "80"
                                 }
                             ],
+                            "environmentVariables": [
+                              {
+                                "name": "ENV",
+                                "value": "[parameters('environment')]"
+                              }
+                            ],
                             "resources": {
                                 "requests": {
                                     "cpu": "[variables('cores')]",
@@ -106,7 +126,6 @@
                         }
                     }
                 ],
-                "osType": "[parameters('osType')]",
                 "ipAddress": {
                     "type": "Public",
                     "ports": [
