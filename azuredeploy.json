@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "Name for the container group"
             },
-            "defaultValue": "acilinuxpublicipcontainergroup"
+            "defaultValue": "aci-from-acr"
         },
         "image": {
             "type": "string",
@@ -16,8 +16,8 @@
             }
         },
         "imageLoginServer": {
-            "type": "String",
-            "defaultValue": ".azurecr.io",
+            "type": "string",
+            "defaultValue": "*.azurecr.io",
             "metadata": {
                 "description": "Container image to deploy. Should be of the form accountName/imagename:tag for images stored in Docker Hub or a fully qualified URI for a private registry like the Azure Container Registry."
             }
@@ -25,13 +25,13 @@
         "imageUsername": {
             "type": "string",
             "metadata": {
-                "description": "Container registry user name."
+                "description": "Azure Container Registry user name."
             }
         },
         "imagePassword": {
             "type": "string",
             "metadata": {
-                "description": "Container registry password."
+                "description": "Azure Container Registry password."
             }
         },
         "cpuCores": {
@@ -54,10 +54,13 @@
                 "Windows"
             ],
             "defaultValue": "Linux",
-            "type": "String"
+            "type": "string"
         }
     },
-    "variables": {},
+    "variables": {
+        "cores": "[int(parameters('cpuCores'))]",
+        "memory": "[float(parameters('memoryInGb'))]"
+    },
     "resources": [
         {
             "name": "[parameters('name')]",
@@ -96,8 +99,8 @@
                             ],
                             "resources": {
                                 "requests": {
-                                    "cpu": "[parameters('cpuCores')]",
-                                    "memoryInGb": "[parameters('memoryInGb')]"
+                                    "cpu": "[variables('cores')]",
+                                    "memoryInGb": "[variables('memory')]"
                                 }
                             }
                         }
