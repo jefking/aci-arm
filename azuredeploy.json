@@ -47,6 +47,14 @@
                 "description": "The amount of memory to allocate to the container in gigabytes."
             },
             "defaultValue": "1.5"
+        },
+        "osType": {
+            "allowedValues": [
+                "Linux",
+                "Windows"
+            ],
+            "defaultValue": "Linux",
+            "type": "String"
         }
     },
     "variables": {},
@@ -95,7 +103,7 @@
                         }
                     }
                 ],
-                "osType": "Linux",
+                "osType": "[parameters('osType')]",
                 "ipAddress": {
                     "type": "Public",
                     "ports": [
