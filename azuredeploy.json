@@ -39,7 +39,7 @@
             "metadata": {
                 "description": "The number of CPU cores to allocate to the container. Must be an integer."
             },
-            "defaultValue": "1.0"
+            "defaultValue": "1"
         },
         "memoryInGb": {
             "type": "string",
