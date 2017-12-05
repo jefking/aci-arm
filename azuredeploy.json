@@ -21,6 +21,18 @@
                 "production"
             ]
         },
+        "tier": {
+            "type": "string",
+            "metadata": {
+                "description": "tier"
+            },
+            "defaultValue": "3",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
         "image": {
             "type": "string",
             "metadata": {
@@ -112,10 +124,14 @@
                                 }
                             ],
                             "environmentVariables": [
-                              {
-                                "name": "ENV",
-                                "value": "[parameters('environment')]"
-                              }
+                                {
+                                    "name": "ENV",
+                                    "value": "[parameters('environment')]"
+                                },
+                                {
+                                    "name": "TIER",
+                                    "value": "[parameters('tier')]"
+                                }
                             ],
                             "resources": {
                                 "requests": {
